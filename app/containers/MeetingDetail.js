@@ -36,11 +36,9 @@ class MeetingDetail extends React.Component
         const styles = {
             wrapper: { display: 'flex', flexWrap: 'wrap' },
             title: { fontSize: '24px' },
-            titleFields: { fontSize: '14px', fontColor: "#888", margin: "0 1em 0 0px" }
+            titleFields: { fontSize: '14px', fontColor: "#888", margin: "0 1em 0 0px" },
+            button: {margin: 12}
         };
-
-        console.log(">MeetingDetail.render");
-        console.log(this.props.minute);
 
         return (
             <Card>
@@ -58,18 +56,19 @@ class MeetingDetail extends React.Component
                     <CardText>
                             <Row>
                                 <Col  xs={3} md={6}>
-                                    <Agenda items={this.props.minute.agenda}/>
+                                    <Agenda agenda={this.props.minute.agenda}/>
                                 </Col>
                                 <Col  xs={3} md={6}>
-                                    <PeopleList title="Invited" items={this.props.minute.invited}/>
+                                    <PeopleList title="Invited/Attended" items={this.props.minute.invited}/>
                                 </Col>
                             </Row>
-                            <Divider />
                             <Row>
-                                <Col  xs={3} md={5}>
-                                    <PeopleList title="Attended" items={this.props.minute.attended}/>
+                                <Col md={12}>
+                                    <Divider />
                                 </Col>
-                                <Col  xs={3} md={5}>
+                            </Row>
+                            <Row>
+                                <Col  xs={3} md={12}>
                                     <TextField
                                         id="minute" name="minute"
                                         hintText="Take you notes right here!"

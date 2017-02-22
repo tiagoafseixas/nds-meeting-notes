@@ -1,5 +1,7 @@
 "use strict";
 
+import './actions/AgendaActions.js';
+
 /**
  * ACTION TYPES
  * *****************************************************************************

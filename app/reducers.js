@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { ADD_MINUTE, UPDATE_CURRENT_MINUTE_TITLE } from './actions';
-
+import { agenda } from './reducers/AgendaReducers';
 
 function minutes(state = {}, action)
 {
@@ -9,14 +9,14 @@ function minutes(state = {}, action)
         case ADD_MINUTE:
             console.log("#minutes -> ADD_MINUTE")
             let newMinute = {
-                title : "Meeting Title",
+                title : "",
                 date : new Date(),
                 time : null,
                 conclusions : "",
                 minute : "",
-                agenda : [],
-                invited : [],
-                attended : []
+                agenda : {},
+                invited : {},
+                attended : {}
             };
             return Object.assign({}, state, { "current" : newMinute });
         case UPDATE_CURRENT_MINUTE_TITLE:
@@ -28,15 +28,6 @@ function minutes(state = {}, action)
     }
 }
 
-function currentMinute(state = {}, action)
-{
-    switch (action.type)
-    {
-        default:
-            return state;
-    }
-}
-
-const MEETINGS_APP = combineReducers({ minutes, currentMinute });
+const MEETINGS_APP = combineReducers({ minutes, agenda });
 
 export default MEETINGS_APP;
