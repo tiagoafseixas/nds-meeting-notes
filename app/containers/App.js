@@ -17,15 +17,20 @@ class App extends React.Component
         console.log(">render App");
         console.log(this.props.state);
 
+        let meetingDetail = null;
+        if(typeof this.props.state.minutes.current != "undefined") {
+            meetingDetail = <MeetingDetail minute={this.props.state.minutes.current}/>;
+        }
         return (
             <MuiThemeProvider>
                 <Grid>
                     <Row>
-                        <Col xs={4} md={3}>
+                        <Col xs={0} md={3}>
                             <SideBar minutes={this.props.state.minutes}/>
                         </Col>
+
                         <Col xs={3} md={9}>
-                            <MeetingDetail />
+                            {meetingDetail}
                         </Col>
                     </Row>
                 </Grid>

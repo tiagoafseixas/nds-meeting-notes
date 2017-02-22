@@ -17,7 +17,7 @@ class PeopleList extends React.Component
     {
         return (
             <List>
-                <Subheader>Invited/Attended</Subheader>
+                <Subheader>{this.props.title}</Subheader>
                 <ListItem
                     primaryText="Ze das Couves"
                     leftCheckbox={<Checkbox />}

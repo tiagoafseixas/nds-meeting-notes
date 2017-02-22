@@ -19,18 +19,19 @@ class SideBar extends React.Component
 
     render()
     {
-        console.log(this.props);
+        console.log(this.props.minutes);
         console.log("here");
+        console.log(this.props.minutes[1]);
         return (
         <Paper>
             <List>
-                <ListItem primaryText="New Meeting" rightIcon={<ActionNoteAdd/>}
+                <ListItem primaryText="New Meeting" rightIcon={<ActionNoteAdd />}
                     onClick={(event) => this.props.addMinute(event)} />    
             </List>
             <Divider />
             <List>
                 <Subheader>My Meetings</Subheader>
-                {this.props.minutes.map( (minute) => <ListItem key={minute._id}> {minute.title} </ListItem>)}
+                {Object.keys(this.props.minutes).map( (key) => <ListItem key={key}> {this.props.minutes[key].title} </ListItem>)}
             </List>
         </Paper>
         );
@@ -38,16 +39,13 @@ class SideBar extends React.Component
 }
 
 const mapStateToProps = (state, ownProps) => ({
-    
+    state : state
 });
 
 const mapDispatchToProps = (dispatch, ownProps) =>
 {
     return {
-        addMinute: (event, callback) => {
-            console.log("callback");
-            dispatch(addMinute());
-        }
+        addMinute: (event, callback) => dispatch(addMinute())
     }
 };
 

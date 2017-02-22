@@ -1,6 +1,7 @@
 {
     "visibilityFilter" : "",
-    "minutes" : [
+    "minutes" : {
+        "1" :
         {
             "id" : 1,
             "title" : "Minute Subject",
@@ -8,15 +9,14 @@
             "presences" : [],
             "agenda" : [],
             "todos" : []
+        },
+        "current" : {
+            "id" : "",
+            "title" : "",
+            "date" : "",
+            "presences" : [],
+            "agenda" : [],
+            "todos": []
         }
-    ],
-
-    "current" : {
-        "id" : "",
-        "title" : "",
-        "date" : "",
-        "presences" : [],
-        "agenda" : [],
-        "todos": []
     }
 }
