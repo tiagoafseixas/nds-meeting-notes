@@ -1,0 +1,53 @@
+import React from "react";
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { Grid, Row, Col } from 'react-flexbox-grid/lib/index'
+import MeetingDetail from './MeetingDetail.js'
+import SideBar from './SideBar';
+import { connect } from 'react-redux';
+
+class App extends React.Component
+{
+    constructor()
+    {
+        super();
+    }
+
+    render()
+    {
+        console.log(">render App");
+        console.log(this.props.state);
+
+        return (
+            <MuiThemeProvider>
+                <Grid>
+                    <Row>
+                        <Col xs={4} md={3}>
+                            <SideBar minutes={this.props.state.minutes}/>
+                        </Col>
+                        <Col xs={3} md={9}>
+                            <MeetingDetail />
+                        </Col>
+                    </Row>
+                </Grid>
+            </MuiThemeProvider>
+        )
+    }
+}
+
+
+const mapStateToProps = (state, ownProps) => ({
+    state : state
+});
+
+const mapDispatchToProps = (dispatch, ownProps) =>
+{
+    return {
+        addMinute: (event, callback) => {
+            console.log("callback");
+            dispatch(addMinute());
+        }
+    }
+};
+
+App = connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

@@ -1,0 +1,22 @@
+{
+    "visibilityFilter" : "",
+    "minutes" : [
+        {
+            "id" : 1,
+            "title" : "Minute Subject",
+            "date" : "2017-01-01T09:00:00",
+            "presences" : [],
+            "agenda" : [],
+            "todos" : []
+        }
+    ],
+
+    "current" : {
+        "id" : "",
+        "title" : "",
+        "date" : "",
+        "presences" : [],
+        "agenda" : [],
+        "todos": []
+    }
+}
