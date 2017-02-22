@@ -57,10 +57,10 @@ class MeetingDetail extends React.Component
                     </CardTitle>
                     <CardText>
                             <Row>
-                                <Col  xs={3} md={5}>
+                                <Col  xs={3} md={6}>
                                     <Agenda items={this.props.minute.agenda}/>
                                 </Col>
-                                <Col  xs={3} md={5}>
+                                <Col  xs={3} md={6}>
                                     <PeopleList title="Invited" items={this.props.minute.invited}/>
                                 </Col>
                             </Row>
