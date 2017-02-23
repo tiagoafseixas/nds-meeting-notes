@@ -7,7 +7,7 @@ import Subheader from 'material-ui/Subheader';
 
 import ActionNoteAdd from 'material-ui/svg-icons/action/note-add';
 
-import { addMinute } from '../actions';
+import { addMinute } from '../actions/MinutesActions';
 import { connect } from 'react-redux';
 
 class SideBar extends React.Component

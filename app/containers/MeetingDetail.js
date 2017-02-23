@@ -15,7 +15,7 @@ import TodoList from '../components/TodoList';
 import Agenda from '../components/Agenda';
 import PeopleList from '../components/PeopleList';
 
-import { updateCurrentMinuteTitle } from '../actions';
+import { updateCurrentMinuteTitle } from '../actions/MinutesActions';
 
 class MeetingDetail extends React.Component
 {

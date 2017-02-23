@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import { connect } from 'react-redux';
 
 import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
@@ -10,13 +11,12 @@ import Divider from 'material-ui/Divider';
 import ActionDelete from 'material-ui/svg-icons/action/delete';
 import ToggleStarBorder from 'material-ui/svg-icons/toggle/star-border';
 import ActionInfo from 'material-ui/svg-icons/action/info';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+
+import FloatingActionButton from 'material-ui/FloatingActionButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import IconButton from 'material-ui/IconButton';
-
-import { connect } from 'react-redux';
 
 class Agenda extends React.Component
 {
