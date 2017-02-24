@@ -58,7 +58,7 @@ class MeetingDetail extends React.Component
                                     <Agenda agenda={this.props.state.agenda.items}/>
                                 </Col>
                                 <Col  xs={3} md={6}>
-                                    <PeopleList title="Invited/Attended" items={this.props.minute.invited}/>
+                                    <PeopleList title="Invited/Attended" items={this.props.state.invited.items}/>
                                 </Col>
                             </Row>
                             <Row>
@@ -77,12 +77,11 @@ class MeetingDetail extends React.Component
                                     />
                                 </Col>
                             </Row>
-                            <Divider />
                             <Row>
-                                <Col xs={3} md={5}>
-                                    <TodoList />
+                                <Col xs={3} md={6}>
+                                    <TodoList items={this.props.state.todos.items}/>
                                 </Col>
-                                <Col xs={3} md={7}> 
+                                <Col xs={3} md={6}> 
                                     <TextField
                                         id="conclusions" name="conclusions"
                                         hintText="After the meeting write your thoughts right here!"

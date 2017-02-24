@@ -3,21 +3,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import {List, ListItem} from 'material-ui/List';
-import Subheader from 'material-ui/Subheader';
+import { List, ListItem } from 'material-ui/List';
 import Checkbox from 'material-ui/Checkbox';
 import Divider from 'material-ui/Divider';
 import TextField from 'material-ui/TextField';
-
-import ActionDelete from 'material-ui/svg-icons/action/delete';
-import ToggleStarBorder from 'material-ui/svg-icons/toggle/star-border';
-import ActionInfo from 'material-ui/svg-icons/action/info';
-import ContentAdd from 'material-ui/svg-icons/content/add';
-
-import FloatingActionButton from 'material-ui/FloatingActionButton';
 import RaisedButton from 'material-ui/RaisedButton';
-import FlatButton from 'material-ui/FlatButton';
 import IconButton from 'material-ui/IconButton';
+import ActionDelete from 'material-ui/svg-icons/action/delete';
+import ActionInfo from 'material-ui/svg-icons/action/info';
 
 import { addAgendaItem, removeAgendaItem } from '../actions/AgendaActions';
 
@@ -32,8 +25,7 @@ class Agenda extends React.Component
     {
         const styles = {
             button: {margin: 12},
-            listItem : {padding: "0px"},
-            actions: {display: 'flex', flexWrap: 'wrap'},
+            listItem : {paddingBottom: 0},
             checkbox : {top: '25px'},
             trash : {top:"12px"}
         };
@@ -54,9 +46,10 @@ class Agenda extends React.Component
                     <Divider />
                     {Object.keys(this.props.agenda).map( (key) => 
                         <ListItem key={key}
-                            primaryText={<TextField key = {key} name = "agendaDescription" />}
+                            primaryText={<TextField key = {key} name = "agendaDescription"  multiLine={true}/>}
                             leftCheckbox={checkedTag}
-                            rightIconButton={deleteTag(key)} />
+                            rightIconButton={deleteTag(key)}
+                            style={styles.listItem} />
                     )}
                 </List>
                 <RaisedButton label="New Agenda Item" primary={true} style={styles.button} onClick={() => this.props.addAgendaItem()}/>

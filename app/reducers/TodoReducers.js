@@ -1,25 +1,28 @@
-import { ADD_AGENDA_ITEM, REMOVE_AGENDA_ITEM } from "../actions/AgendaActions"
+"use strict";
+
+import { ADD_TODO_ITEM, REMOVE_TODO_ITEM } from "../actions/TodoActions"
+
 
 var Immutable = require('immutable');
-const NEW_AGENDA_ITEM = { descriptions : "", completed : false, important : false };
+const NEW_TODO_ITEM = { description : "", completed : false};
 
-export function agenda(state = { lastid : 0, items : {} }, action)
+export function todos(state = { lastid : 0, items : {} }, action)
 {
     switch(action.type)
     {
-        case ADD_AGENDA_ITEM:
-            console.log("#agenda -> ADD_AGENDA_ITEM");
+        case ADD_TODO_ITEM:
+            console.log("#todos -> ADD_TODO_ITEM");
 
             let oldItems = Immutable.Map(state.items);
             let newId = state.lastid + 1;
             
             return Immutable.Map({
                 lastid : newId,
-                items : oldItems.set(newId, NEW_AGENDA_ITEM).toObject()
+                items : oldItems.set(newId, NEW_TODO_ITEM).toObject()
             }).toObject();
 
-        case REMOVE_AGENDA_ITEM:
-            console.log("#agenda -> REMOVE_AGENDA_ITEM");
+        case REMOVE_TODO_ITEM:
+            console.log("#todos -> REMOVE_PERSON_ITEM");
 
             return Immutable.Map({
                 lastid : state.lastid,
