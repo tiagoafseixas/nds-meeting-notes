@@ -7,7 +7,7 @@ import { List, ListItem } from 'material-ui/List';
 import Checkbox from 'material-ui/Checkbox';
 import Divider from 'material-ui/Divider';
 import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import IconButton from 'material-ui/IconButton';
 import ActionDelete from 'material-ui/svg-icons/action/delete';
 import ActionInfo from 'material-ui/svg-icons/action/info';
@@ -52,7 +52,7 @@ class Agenda extends React.Component
                             style={styles.listItem} />
                     )}
                 </List>
-                <RaisedButton label="New Agenda Item" primary={true} style={styles.button} onClick={() => this.props.addAgendaItem()}/>
+                <FlatButton label="New Agenda Item" primary={true} style={styles.button} onClick={() => this.props.addAgendaItem()}/>
             </div>
         );
     }

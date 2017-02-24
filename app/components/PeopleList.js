@@ -11,7 +11,7 @@ import Avatar from 'material-ui/Avatar';
 import TextField from 'material-ui/TextField';
 
 // Buttons
-import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import IconButton from 'material-ui/IconButton';
 
 //Images
@@ -59,7 +59,7 @@ class PeopleList extends React.Component
                     )}
                     
                 </List>
-                <RaisedButton label="Add Invited" primary={true} style={styles.button} onClick={() => this.props.addPersonItem()}/>
+                <FlatButton label="Add Invited" primary={true} style={styles.button} onClick={() => this.props.addPersonItem()}/>
             </div>
         );
     }

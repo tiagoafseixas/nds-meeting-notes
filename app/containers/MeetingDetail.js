@@ -1,7 +1,7 @@
 import React from "react";
 
 import {Card, CardActions, CardHeader, CardTitle, CardText} from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import Checkbox from 'material-ui/Checkbox';
 import TextField from 'material-ui/TextField';
 import TimePicker from 'material-ui/TimePicker';
@@ -46,10 +46,16 @@ class MeetingDetail extends React.Component
                         <TextField
                             id="title" name="title"
                             hintText="Meeting Title" fullWidth={true} style={styles.title} value={this.props.minute.title}
-                            onChange={ (event, callback) => {this.props.updateCurrentMinute(event, callback)} } />
+                            onChange={ (event, callback) => {this.props.updateCurrentMinuteTitle(event, this.props.minute.id)} } />
                         <div style={styles.wrapper}>
-                            <DatePicker id="date" name="date" hintText="Meeting Day" autoOk={true} textFieldStyle={styles.titleFields} />
-                            <TimePicker id="time" name="time" hintText="Meeting Time" autoOk={true} textFieldStyle={styles.titleFields} defaultTime={this.props.minute.time}/>
+                            <DatePicker
+                                id="date" name="date" hintText="Meeting Day"
+                                autoOk={true} textFieldStyle={styles.titleFields}
+                            />
+                            <TimePicker
+                                id="time" name="time" hintText="Meeting Time" autoOk={true} textFieldStyle={styles.titleFields}
+                                defaultTime={this.props.minute.time}
+                            />
                         </div>
                     </CardTitle>
                     <CardText>
@@ -73,8 +79,8 @@ class MeetingDetail extends React.Component
                                         hintText="Take you notes right here!"
                                         floatingLabelText="Meeting Minute"
                                         multiLine={true} rows={6} rowsMax={6}
-                                        fullWidth={true} value={this.props.minute.minute}
-                                    />
+                                        fullWidth={true}
+                                    >{this.props.minute.minute}</TextField>
                                 </Col>
                             </Row>
                             <Row>
@@ -87,13 +93,13 @@ class MeetingDetail extends React.Component
                                         hintText="After the meeting write your thoughts right here!"
                                         floatingLabelText="Conclusions"
                                         multiLine={true} rows={6} rowsMax={6}
-                                        fullWidth={true} value={this.props.minute.conclusions}
-                                    />
+                                        fullWidth={true}
+                                    >{this.props.minute.conclusions}</TextField>
                                 </Col>
                             </Row>
                     </CardText>
                     <CardActions>
-                        <FlatButton label="Save" primary={true} type="submit"/>
+                        <RaisedButton label="Save" primary={true} type="submit"/>
                     </CardActions>
                 </form>
             </Card>
@@ -108,8 +114,8 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = (dispatch, ownProps) =>
 {
     return {
-        updateCurrentMinute: (event, callback) => {
-            dispatch(updateCurrentMinuteTitle(event.target.value));
+        updateCurrentMinuteTitle: (event, id) => {
+            dispatch(updateCurrentMinuteTitle(event.target.value, id));
         }
     }
 };

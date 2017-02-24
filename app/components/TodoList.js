@@ -10,7 +10,7 @@ import Divider from 'material-ui/Divider';
 import TextField from 'material-ui/TextField';
 
 // Buttons
-import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import IconButton from 'material-ui/IconButton';
 
 //Images
@@ -57,7 +57,7 @@ class TodoList extends React.Component
                             />
                         )}
                 </List>
-                <RaisedButton label="Add Item" primary={true} style={styles.button} onClick={() => this.props.addTodoItem()}/>
+                <FlatButton label="Add Item" primary={true} style={styles.button} onClick={() => this.props.addTodoItem()}/>
             </div>
         )
     }

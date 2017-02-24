@@ -7,7 +7,7 @@ import Subheader from 'material-ui/Subheader';
 
 import ActionNoteAdd from 'material-ui/svg-icons/action/note-add';
 
-import { addMinute } from '../actions/MinutesActions';
+import { addMinute, setMinute } from '../actions/MinutesActions';
 import { connect } from 'react-redux';
 
 class SideBar extends React.Component
@@ -16,9 +16,18 @@ class SideBar extends React.Component
     {
         super();
     }
-
     render()
     {
+        let meetingList = null;
+        if(this.props.minutes) {
+            meetingList = (
+                <List>
+                    <Subheader>My Meetings</Subheader>
+                    {Object.keys(this.props.minutes).map( (key) => <ListItem key={key} onClick={() => this.props.setMinute(key)}> {this.props.minutes[key].title} </ListItem>)}
+                </List>
+            );
+        }
+        
         return (
         <Paper>
             <List>
@@ -26,10 +35,7 @@ class SideBar extends React.Component
                     onClick={(event) => this.props.addMinute(event)} />    
             </List>
             <Divider />
-            <List>
-                <Subheader>My Meetings</Subheader>
-                {Object.keys(this.props.minutes).map( (key) => <ListItem key={key}> {this.props.minutes[key].title} </ListItem>)}
-            </List>
+            {meetingList}
         </Paper>
         );
     }
@@ -42,7 +48,8 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = (dispatch, ownProps) =>
 {
     return {
-        addMinute: (event, callback) => dispatch(addMinute())
+        addMinute: (event, callback) => dispatch(addMinute()),
+        setMinute: (id) => dispatch(setMinute(id))
     }
 };
 

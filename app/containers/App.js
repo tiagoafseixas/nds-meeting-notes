@@ -15,8 +15,8 @@ class App extends React.Component
     render()
     {
         let meetingDetail = null;
-        if(typeof this.props.state.minutes.current != "undefined") {
-            meetingDetail = <MeetingDetail minute={this.props.state.minutes.current}/>;
+        if(this.props.state.minutes.current != null) {
+            meetingDetail = <MeetingDetail minute={this.props.state.minutes.items[this.props.state.minutes.current]}/>;
         }
         
         return (
@@ -24,7 +24,7 @@ class App extends React.Component
                 <Grid>
                     <Row>
                         <Col xs={0} md={3}>
-                            <SideBar minutes={this.props.state.minutes}/>
+                            <SideBar minutes={this.props.state.minutes.items}/>
                         </Col>
 
                         <Col xs={3} md={9}>
