@@ -10,7 +10,6 @@ import App from './containers/App';
 import MEETINGS_APP from './reducers';
 
 let store = createStore(MEETINGS_APP);
-console.log(store.getState());
 
 injectTapEventPlugin();
 

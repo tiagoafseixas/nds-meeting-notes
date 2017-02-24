@@ -18,5 +18,5 @@ export const REMOVE_AGENDA_ITEM = "REMOVE_AGENDA_ITEM";
  * *****************************************************************************
  */
 
-export function addAgendaItem() { return {type: ADD_MINUTE}; }
-export function removeAgendaItem() { return {type: GET_MINUTE, id}; }
+export function addAgendaItem() { return {type: ADD_AGENDA_ITEM}; }
+export function removeAgendaItem(id) { return {type: REMOVE_AGENDA_ITEM, id}; }

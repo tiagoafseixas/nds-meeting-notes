@@ -28,7 +28,6 @@ class MeetingDetail extends React.Component
     handleSubmit(event)
     {
         event.preventDefault();
-        console.log(event.target);
     }
         
     render()
@@ -56,7 +55,7 @@ class MeetingDetail extends React.Component
                     <CardText>
                             <Row>
                                 <Col  xs={3} md={6}>
-                                    <Agenda agenda={this.props.minute.agenda}/>
+                                    <Agenda agenda={this.props.state.agenda.items}/>
                                 </Col>
                                 <Col  xs={3} md={6}>
                                     <PeopleList title="Invited/Attended" items={this.props.minute.invited}/>
@@ -104,15 +103,13 @@ class MeetingDetail extends React.Component
 }
 
 const mapStateToProps = (state, ownProps) => ({
-    state : state
+   state : state
 });
 
 const mapDispatchToProps = (dispatch, ownProps) =>
 {
     return {
         updateCurrentMinute: (event, callback) => {
-            console.log("@ dispatch to props");
-            console.log(event.target.value);
             dispatch(updateCurrentMinuteTitle(event.target.value));
         }
     }

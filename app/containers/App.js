@@ -14,13 +14,11 @@ class App extends React.Component
 
     render()
     {
-        console.log(">render App");
-        console.log(this.props.state);
-
         let meetingDetail = null;
         if(typeof this.props.state.minutes.current != "undefined") {
             meetingDetail = <MeetingDetail minute={this.props.state.minutes.current}/>;
         }
+        
         return (
             <MuiThemeProvider>
                 <Grid>
@@ -48,7 +46,6 @@ const mapDispatchToProps = (dispatch, ownProps) =>
 {
     return {
         addMinute: (event, callback) => {
-            console.log("callback");
             dispatch(addMinute());
         }
     }

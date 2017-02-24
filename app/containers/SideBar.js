@@ -19,9 +19,6 @@ class SideBar extends React.Component
 
     render()
     {
-        console.log(this.props.minutes);
-        console.log("here");
-        console.log(this.props.minutes[1]);
         return (
         <Paper>
             <List>
