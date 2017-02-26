@@ -15,7 +15,7 @@ import TodoList from '../components/TodoList';
 import Agenda from '../components/Agenda';
 import PeopleList from '../components/PeopleList';
 
-import { updateCurrentMinuteTitle } from '../actions/MinutesActions';
+import { updateCurrentMinuteTitle, saveMinute } from '../actions/MinutesActions';
 
 class MeetingDetail extends React.Component
 {
@@ -41,7 +41,11 @@ class MeetingDetail extends React.Component
 
         return (
             <Card>
-                <form onSubmit={this.handleSubmit}>
+                <form
+                    id="meetingDetailForm"
+                    onSubmit={(event) => this.props.saveMinute(event)}
+                    formMethod="post" action="/api/minutes/"
+                >
                     <CardTitle>
                         <TextField
                             id="title" name="title"
@@ -116,6 +120,10 @@ const mapDispatchToProps = (dispatch, ownProps) =>
     return {
         updateCurrentMinuteTitle: (event, id) => {
             dispatch(updateCurrentMinuteTitle(event.target.value, id));
+        },
+        saveMinute: (event) => {
+            event.preventDefault();
+            dispatch(saveMinute(event.target));
         }
     }
 };

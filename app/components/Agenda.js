@@ -30,15 +30,19 @@ class Agenda extends React.Component
             trash : {top:"12px"}
         };
 
-        let checkedTag = <Checkbox name="agendaItemCompleted" style={styles.checkbox} />;
+        let checkedTag = (
+            <div>
+                <Checkbox
+                    name="agendaItemCompleted" style={styles.checkbox}
+                    defaultChecked={false}/>
+            </div>
+        );
         let deleteTag = ( (key) =>
             <IconButton tooltip="Delete" onClick={() => this.props.removeAgendaItem(key)} style={styles.trash}>
                 <ActionDelete />
             </IconButton>
         );
-        
-        console.log("#Agenda -> rendering agenda.");
-        console.log(this.props.agenda);
+
         return (
             <div>
                 <List name = "agenda">

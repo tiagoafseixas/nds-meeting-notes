@@ -29,9 +29,9 @@ export const VISIBILITY_FILTERS = {
  */
 
 export function addMinute() { return {type: ADD_MINUTE}; }
-export function getMinute() { return {type: GET_MINUTE, id}; }
-export function archiveMinute() { return {type: ARCHIVE_MINUTE, id}; }
-export function saveMinute() { return {type: SAVE_MINUTE, minute}; }
+export function getMinute(id) { return {type: GET_MINUTE, id}; }
+export function archiveMinute(id) { return {type: ARCHIVE_MINUTE, id}; }
+export function saveMinute(minute) { return {type: SAVE_MINUTE, minute}; }
 export function loadMinutes() { return {type : LOAD_MINUTES}; }
 export function updateCurrentMinuteTitle(title, id) { return {type : UPDATE_CURRENT_MINUTE_TITLE, title, id}; }
 export function setMinute(id) { return {type : SET_MINUTE, id}; }
