@@ -23,7 +23,8 @@ class PeopleList extends React.Component
                     {Object.keys(this.props.items).map( (key) =>
                         <List.Item key={key}>
                             <List.Content floated='left'>
-                                <BooleanSelect key={key} name="invitedItemAttended" placeholder="Attended?"/>
+                                <BooleanSelect key={key} name="invitedItemAttended" placeholder="Attended?"
+                                    />
                             </List.Content>
                             <List.Content floated='right'>
                                 <Button onClick={() => this.props.removePersonItem(key)} icon>
@@ -31,7 +32,9 @@ class PeopleList extends React.Component
                                 </Button>
                             </List.Content>
                             <List.Content>
-                                <Input key={key} name="invitedName" placeholder="Insert name here..."/>
+                                <Input key={key} name="invitedName" 
+                                    placeholder="Insert name here..."
+                                    defaultValue={this.props.items[key].name}/>
                             </List.Content>
                         </List.Item>
                     )}

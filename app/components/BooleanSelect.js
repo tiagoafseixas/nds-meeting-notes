@@ -20,7 +20,7 @@ export default class BooleanSelect extends React.Component {
         {key : "", value : "", text: ""},
         {key : "false", value : "false", text: "No. "},
         {key : "true", value : "true", text: "Yes."}
-      ]} {...this.props} value={this.state.value} compact onClick={(event) => this.handleChange(event)}/>
+      ]} {...this.props} compact onClick={(event) => this.handleChange(event)}/>
     );
   }
 }

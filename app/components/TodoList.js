@@ -38,7 +38,9 @@ class TodoList extends React.Component
                                 </Button>
                             </List.Content>
                             <List.Content>
-                                <TextArea key={key} name="todoDescription" placeholder="Follow up task..."/>
+                                <TextArea key={key} name="todoDescription"
+                                    placeholder="Follow up task..."
+                                    defaultValue={this.props.items[key].description}/>
                             </List.Content>
                         </List.Item>
                         )}

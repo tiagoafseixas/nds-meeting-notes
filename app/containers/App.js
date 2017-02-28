@@ -17,15 +17,16 @@ class App extends React.Component
     render()
     {
         let meetingDetail = null;
-        if(this.props.state.minutes.current != null) {
-            meetingDetail = <MeetingDetail minute={this.props.state.minutes.items[this.props.state.minutes.current]}/>;
+        if(this.props.currentMinute != null) {
+            console.log(this.props.minutes);
+            meetingDetail = <MeetingDetail minute={this.props.minutes[this.props.currentMinute]}/>;
         }
         
         return (
             <Grid>
                 <Grid.Row>
                     <Grid.Column width={4}>
-                        <Segment basic><SideBar minutes={this.props.state.minutes.items}/></Segment>
+                        <Segment basic><SideBar minutes={this.props.minutes}/></Segment>
                     </Grid.Column>
                     <Grid.Column width={12}>
                         <Segment basic>{meetingDetail}</Segment>
@@ -38,7 +39,8 @@ class App extends React.Component
 
 
 const mapStateToProps = (state, ownProps) => ({
-    state : state
+    minutes : state.minutes.items,
+    currentMinute : state.minutes.current
 });
 
 const mapDispatchToProps = (dispatch, ownProps) =>

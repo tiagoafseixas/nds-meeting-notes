@@ -1,6 +1,6 @@
 "use strict";
 
-import { ADD_TODO_ITEM, REMOVE_TODO_ITEM } from "../actions/TodoActions"
+import { ADD_TODO_ITEM, REMOVE_TODO_ITEM, TODO_ITEMS_LOADED } from "../actions/TodoActions"
 
 
 var Immutable = require('immutable');
@@ -27,6 +27,12 @@ export function todos(state = { lastid : 0, items : {} }, action)
             return Immutable.Map({
                 lastid : state.lastid,
                 items : Immutable.Map(state.items).delete(action.id).toObject()
+            }).toObject();
+
+        case TODO_ITEMS_LOADED:
+            return Immutable.Map({
+                lastId: 0,
+                items : _.keyBy(action.items, "_id")
             }).toObject();
         default:
             return state;

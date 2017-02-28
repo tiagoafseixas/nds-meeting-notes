@@ -26,6 +26,10 @@ class MeetingDetail extends React.Component
         
     render()
     {
+        console.log("this is meeting detail render");
+        console.log(this.props.state);
+
+
         return (
             <Form id="meetingDetailForm"
                 onSubmit={(event) => this.props.saveMinute(event)}
@@ -33,6 +37,7 @@ class MeetingDetail extends React.Component
                 <Header as='h3' attached='top'>
                     <Form.Input
                         id="title" name="title" placeholder="New Meeting Minute..."
+                        value={this.props.state.minutes.items[this.props.state.minutes.current].title}
                         onChange={ (event, callback) => 
                             {this.props.updateCurrentMinuteTitle(
                                 event, this.props.minute.id)
@@ -49,14 +54,14 @@ class MeetingDetail extends React.Component
                             <Grid.Column>
                                 <Segment>
                                     <Agenda 
-                                        agenda={this.props.state.agenda.items}/>
+                                        agenda={this.props.agendaItems}/>
                                     </Segment>
                             </Grid.Column>
                             <Grid.Column>
                                 <Segment>
                                     <PeopleList
                                         title="Invited/Attended"
-                                        items={this.props.state.invited.items}/>
+                                        items={this.props.invitedItems}/>
                                 </Segment>
                             </Grid.Column>
                         </Grid.Row>
@@ -75,9 +80,8 @@ class MeetingDetail extends React.Component
                         <Grid.Row>
                             <Grid.Column>
                                 <Segment>
-                                    <TodoList
-                                        items={this.props.state.todos.items}/>
-                                    </Segment>
+                                    <TodoList items={this.props.todoItems}/>
+                                </Segment>
                             </Grid.Column>
                             <Grid.Column> 
                                 <Form.TextArea
@@ -106,7 +110,10 @@ class MeetingDetail extends React.Component
 }
 
 const mapStateToProps = (state, ownProps) => ({
-   state : state
+    state : state,
+    todoItems : state.todos.items,
+    invitedItems : state.invited.items,
+    agendaItems : state.agenda.items
 });
 
 const mapDispatchToProps = (dispatch, ownProps) =>
@@ -115,6 +122,7 @@ const mapDispatchToProps = (dispatch, ownProps) =>
         updateCurrentMinuteTitle: (event, id) => {
             dispatch(updateCurrentMinuteTitle(event.target.value, id));
         },
+
         saveMinute: (event) => {
             event.preventDefault();
             dispatch(saveMinute(event.target));

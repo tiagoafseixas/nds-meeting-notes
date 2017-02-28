@@ -1,5 +1,5 @@
 "use strict";
-import { ADD_PERSON_ITEM, REMOVE_PERSON_ITEM } from "../actions/InvitedActions"
+import { ADD_PERSON_ITEM, REMOVE_PERSON_ITEM, PERSON_ITEMS_LOADED } from "../actions/InvitedActions"
 
 
 var Immutable = require('immutable');
@@ -26,6 +26,12 @@ export function invited(state = { lastid : 0, items : {} }, action)
             return Immutable.Map({
                 lastid : state.lastid,
                 items : Immutable.Map(state.items).delete(action.id).toObject()
+            }).toObject();
+
+        case PERSON_ITEMS_LOADED:
+            return Immutable.Map({
+                lastId: 0,
+                items : _.keyBy(action.items, "_id")
             }).toObject();
         default:
             return state;

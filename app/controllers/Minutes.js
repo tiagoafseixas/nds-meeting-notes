@@ -32,7 +32,7 @@ exports.post = (req, res, next) => {
             (value, index) => {
                 return {
                     description : value,
-                    completed : body.get("agendaItemCompleted")[index]
+                    complete : body.get("agendaItemCompleted")[index]
                 }
             }
         );
@@ -54,7 +54,7 @@ exports.post = (req, res, next) => {
             (value, index) => {
                 return {
                     description : value,
-                    completed : body.get("todoItemCompleted")[index]
+                    complete : body.get("todoItemCompleted")[index]
                 }
             }
         );

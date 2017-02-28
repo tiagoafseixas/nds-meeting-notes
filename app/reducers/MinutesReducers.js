@@ -1,36 +1,48 @@
 "use strict";
+
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
+// Minute Action Ids
 import { 
     ADD_MINUTE, UPDATE_CURRENT_MINUTE_TITLE,
-    GET_MINUTE, SET_MINUTE, SAVE_MINUTE, LOAD_MINUTES, minuteItemsIsLoading,
-    minuteItemsLoaded, minuteItemsLoadError, MINUTE_ITEMS_IS_LOADING,
-    MINUTE_ITEMS_LOAD_ERROR, MINUTE_ITEMS_LOADED
+    GET_MINUTE, SET_MINUTE, SAVE_MINUTE, LOAD_MINUTES
 } from '../actions/MinutesActions';
 
-var $ = require('jQuery');
+import { MINUTE_ITEMS_LOAD_ERROR, MINUTE_ITEMS_LOADED, MINUTE_ITEMS_IS_LOADING } from '../actions/MinutesActions';
+import { MINUTE_ADD_ERROR, MINUTE_ADDED, MINUTE_ADDING } from '../actions/MinutesActions';
+
 var Immutable = require('immutable');
 
-const API_URL = 'http://localhost:8080/api/';
-
+/**
+ * =============================================================================
+ * CONSTANTS
+ * =============================================================================
+ */
 const NEW_MINUTE_ITEM = (id) => { return {
     title : "",
     date : new Date(),
     time : null,
     conclusions : "",
     minute : "",
-    agenda : {},
-    invited : {},
-    attended : {},
+    agenda : { lastid: 0, items : {}},
+    invited : { lastid: 0, items : {}},
+    todos : { lastid: 0, items : {}},
     changed : true,
     draft: true,
     id: id
 }};
 
 const NEW_MINUTE_ID = "NEW";
+
+/**
+ * =============================================================================
+ * REDUCERS
+ * =============================================================================
+ */
 export function minutes(state = { items : {}, current: null, loading : false}, action)
 {
+    console.log("#minutes -> " + action.type);
     switch (action.type)
     {
         case ADD_MINUTE:
@@ -43,11 +55,9 @@ export function minutes(state = { items : {}, current: null, loading : false}, a
              *              this in the future?
              * =================================================================
              */
-            console.log("#minutes -> ADD_MINUTE");
+            var items = Immutable.Map(state.items);
             return Immutable.Map({
-                items : Immutable.Map(state.items).set(
-                    NEW_MINUTE_ID, NEW_MINUTE_ITEM(NEW_MINUTE_ID)
-                ).toObject(),
+                items : items.set(NEW_MINUTE_ID, NEW_MINUTE_ITEM(NEW_MINUTE_ID)).toObject(),
                 current : NEW_MINUTE_ID
             }).toObject();
         case UPDATE_CURRENT_MINUTE_TITLE:
@@ -61,11 +71,10 @@ export function minutes(state = { items : {}, current: null, loading : false}, a
              *    items - the list of currently loaded minute items.
              * =================================================================
              */
-            console.log("#minutes -> UPDATE_CURRENT_MINUTE_TITLE");
-            var oldItems = Immutable.Map(state.items).toObject();
-            oldItems[action.id].title = action.title;
+            var items = Immutable.Map(state.items).toObject();
+            items[action.id].title = action.title;
             return Immutable.Map({
-                items : oldItems,
+                items,
                 current : state.current
             }).toObject();
         case SET_MINUTE:
@@ -77,65 +86,20 @@ export function minutes(state = { items : {}, current: null, loading : false}, a
              *     id - the id of the action being edited.
              * =================================================================
              */
-            console.log("#minutes -> SET_MINUTE");
             return Immutable.Map(state).set("current", action.id).toObject();
-        case SAVE_MINUTE:
-            /**
-             * =================================================================
-             * SAVE_MINUTE - Makes the API call to the backend to save the
-             *               current minute in the database.
-             * 
-             *               @todo: After receiving the response it should
-             *               update the current meeting id and the draft field
-             *               value to false.
-             * =================================================================
-             */
-            console.log("#minutes -> SAVE_MINUTE");
-            $.post({
-                url : API_URL + 'minutes/',
-                data : $("#meetingDetailForm").serialize(),
-                success : (data) => { console.log(data); },
-                dataType : "json",
-                contentType: "application/x-www-form-urlencoded"
-            });
-            return state;
         case MINUTE_ITEMS_IS_LOADING:
-            console.log("#minutes -> MINUTE_ITEMS_IS_LOADING");
             return Immutable.Map(state).set("loading", action.isLoading).toObject();
         case MINUTE_ITEMS_LOAD_ERROR:
-            console.log("#minutes -> MINUTE_ITEMS_LOAD_ERROR");
             return state;
         case MINUTE_ITEMS_LOADED:
-            console.log("#minutes -> MINUTE_ITEMS_LOADED");
-            let items = action.items;
-            console.log(items);
-            try {
-                let itemsObj = {};
-                items.map( (minute) => { itemsObj[minute._id] = minute ;});
-                return Immutable.Map(state).set("items", itemsObj).toObject();
-            } catch (e) {
-                console.log(e);
-            }
+            return Immutable.Map(state).set("items", _.keyBy(action.items, "_id")).toObject();
+        case MINUTE_ADDING:
+            return Immutable.Map(state).set("isAdding", action.bool).toObject();
+        case MINUTE_ADDED:
+            return state;
+        case MINUTE_ADD_ERROR:
+            return state;
         default:
             return state;
     }
-}
-
-export function loadMinutesThunk()
-{
-    console.log("here 1");
-    return (dispatch) => {
-        dispatch(minuteItemsIsLoading(true));
-        console.log("here 2");
-        fetch(API_URL + 'minutes/')
-            .then( (response) => {
-                console.log("received response");
-                console.log(response);
-                dispatch(minuteItemsIsLoading(false));
-                return response;
-            })
-            .then( (response) => response.json() )
-            .then( ({items}) => dispatch(minuteItemsLoaded(items)))
-            .catch( () => dispatch(minuteItemsLoadError()));
-    };
 }

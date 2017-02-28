@@ -17,14 +17,19 @@ class Agenda extends React.Component
 
     render()
     {
-        return (
-            <div id = "agendaWrapperDiv">
-                <List divided verticalAlign='middle' name = "agenda">
-                    <List.Header as="h4">Meeting Agenda</List.Header>
-                    {Object.keys(this.props.agenda).map( (key) => 
+        console.log("this is agenda render");
+        console.log(this.props.agenda);
+
+        let agendaList = null;
+        if(Object.keys(this.props.agenda).map) {
+            agendaList = (
+                <div>
+                {Object.keys(this.props.agenda).map( (key) => 
                     <List.Item key={key}>
                         <List.Content floated='left'>
-                            <BooleanSelect key={key} name="agendaItemCompleted" placeholder="Done?"/>
+                            <BooleanSelect
+                                    key={key} name="agendaItemCompleted" placeholder="Done?"
+                                    />
                         </List.Content>
                         <List.Content floated='right'>
                             <Button onClick={() => this.props.removeAgendaItem(key)} icon>
@@ -32,10 +37,20 @@ class Agenda extends React.Component
                             </Button>
                         </List.Content>
                         <List.Content>
-                            <TextArea key={key} name="agendaDescription" placeholder="Agenda Item" autoHeight />
+                            <TextArea key={key} name="agendaDescription" placeholder="Agenda Item" autoHeight
+                                defaultValue={this.props.agenda[key].description} />
                         </List.Content>
                     </List.Item>
                     )}
+                </div>
+            );
+        }
+
+        return (
+            <div id = "agendaWrapperDiv">
+                <List divided verticalAlign='middle' name = "agenda">
+                    <List.Header as="h4">Meeting Agenda</List.Header>
+                    {agendaList}
                 </List>
                 <Button primary basic type="button" onClick={() => this.props.addAgendaItem()}>Add Agenda Item</Button>
             </div>

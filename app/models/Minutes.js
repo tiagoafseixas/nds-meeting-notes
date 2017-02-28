@@ -20,7 +20,7 @@ var agendaSchema = new mongoose.Schema({
 
 var todoSchema = new mongoose.Schema({
     description : String,
-    completed: Boolean
+    complete: Boolean
 });
 
 var personSchema = new mongoose.Schema({
@@ -35,7 +35,7 @@ var minuteSchema = new mongoose.Schema({
     date : Date,
     time : Number,
     minute : String,
-    conclusion : String,
+    conclusions : String,
     agenda : [agendaSchema],
     invited : [personSchema],
     todos : [todoSchema]

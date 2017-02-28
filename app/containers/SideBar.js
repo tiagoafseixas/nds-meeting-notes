@@ -1,7 +1,6 @@
 import React from "react";
 import { Menu, Icon } from 'semantic-ui-react';
-import { addMinute, setMinute, loadMinutes } from '../actions/MinutesActions';
-import { loadMinutesThunk } from '../reducers/MinutesReducers';
+import { addMinute, setMinute, loadMinutes, setCurrentMinute } from '../actions/MinutesActions';
 import { connect } from 'react-redux';
 
 class SideBar extends React.Component
@@ -9,24 +8,18 @@ class SideBar extends React.Component
     constructor()
     {
         super();
-        this.handleItemClick = this.handleItemClick.bind(this);
     }
 
     componentDidMount()
     {
-        console.log("running loadMinutesThunk");
-        this.props.loadMinutesThunk();
-    }
-
-    handleItemClick(e, { name })
-    {
-        this.setState({ activeItem: name })
+        this.props.loadMinutes();
     }
 
     render()
     {
+        console.log("render sidebar");
+        console.log(this.props.minutes);
         var activeItem = this.props.activeItem;
-
         let meetingList = null;
         if(this.props.minutes) {
             meetingList = (
@@ -34,8 +27,7 @@ class SideBar extends React.Component
                     {Object.keys(this.props.minutes).map( (key) => 
                         <Menu.Item
                             key={key} onClick={() => this.props.setMinute(key)}
-                            name={key} active={activeItem==key}
-                            onClick={this.handleItemClick}>
+                            name={key} active={activeItem==key}>
                             {this.props.minutes[key].title}
                         </Menu.Item>
                     )}
@@ -66,9 +58,8 @@ const mapDispatchToProps = (dispatch, ownProps) =>
 {
     return {
         addMinute: (event, callback) => dispatch(addMinute()),
-        setMinute: (id) => dispatch(setMinute(id)),
-        loadMinutes: () => dispatch(loadMinutes()),
-        loadMinutesThunk: () => dispatch(loadMinutesThunk())
+        setMinute: (id) => dispatch(setCurrentMinute(id)),
+        loadMinutes: () => dispatch(loadMinutes())
     }
 };
 
