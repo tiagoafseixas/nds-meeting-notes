@@ -12,7 +12,9 @@ export const SAVE_MINUTE = "SAVE_MINUTE";
 export const LOAD_MINUTES = "LOAD_MINUTES";
 export const UPDATE_CURRENT_MINUTE_TITLE = "UPDATE_CURRENT_MINUTE_TITLE";
 export const SET_MINUTE = "SET_MINUTE";
-
+export const MINUTE_ITEMS_IS_LOADING = "MINUTE_ITEMS_IS_LOADING";
+export const MINUTE_ITEMS_LOADED = "MINUTE_ITEMS_LOADED";
+export const MINUTE_ITEMS_LOAD_ERROR = "MINUTE_ITEMS_LOAD_ERROR";
 /**
  * OTHER CONSTANTS
  * *****************************************************************************
@@ -35,3 +37,6 @@ export function saveMinute(minute) { return {type: SAVE_MINUTE, minute}; }
 export function loadMinutes() { return {type : LOAD_MINUTES}; }
 export function updateCurrentMinuteTitle(title, id) { return {type : UPDATE_CURRENT_MINUTE_TITLE, title, id}; }
 export function setMinute(id) { return {type : SET_MINUTE, id}; }
+export function minuteItemsIsLoading(bool) {return {type: MINUTE_ITEMS_IS_LOADING, isLoading : bool}}
+export function minuteItemsLoaded(items) {return {type : MINUTE_ITEMS_LOADED, items}}
+export function minuteItemsLoadError(bool) {return {type: MINUTE_ITEMS_LOAD_ERROR, hasErrored : bool}}

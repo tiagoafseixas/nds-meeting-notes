@@ -4,12 +4,16 @@ import { Router, Route, browserHistory } from 'react-router';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import { Provider } from 'react-redux'
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 
 import App from './containers/App';
 import MEETINGS_APP from './reducers';
 
-let store = createStore(MEETINGS_APP);
+let store = createStore(
+  MEETINGS_APP,
+  applyMiddleware(thunk)
+);
 
 injectTapEventPlugin();
 

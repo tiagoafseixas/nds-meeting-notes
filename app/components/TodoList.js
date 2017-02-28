@@ -3,21 +3,9 @@
 import React from "react";
 import { connect } from 'react-redux';
 
-// Components
-import {List, ListItem} from 'material-ui/List';
-import Checkbox from 'material-ui/Checkbox';
-import Divider from 'material-ui/Divider';
-import TextField from 'material-ui/TextField';
-
-// Buttons
-import FlatButton from 'material-ui/FlatButton';
-import IconButton from 'material-ui/IconButton';
-
-//Images
-import ActionDelete from 'material-ui/svg-icons/action/delete';
-import ActionInfo from 'material-ui/svg-icons/action/info';
-
+import { List, Button, Icon, Item, TextArea } from 'semantic-ui-react'
 import { addTodoItem, removeTodoItem } from '../actions/TodoActions';
+import BooleanSelect from './BooleanSelect';
 
 class TodoList extends React.Component
 {
@@ -35,29 +23,27 @@ class TodoList extends React.Component
             trash : {top:"12px"}
         };
 
-        let checkedTag = <Checkbox name="todoItemCompleted" style={styles.checkbox} />;
-        let deleteTag = ( (key) =>
-            <IconButton tooltip="Delete" onClick={() => this.props.removeTodoItem(key)} style={styles.trash}>
-                <ActionDelete />
-            </IconButton>
-        );
-
         return (
-            <div>
+            <div id="todoListWrapper">
                 <List>
-                    <ListItem primaryText="Follow Up" rightIcon={<ActionInfo />} />
-                    <Divider />
-                    {Object.keys(this.props.items).map( (key) => 
-                            <ListItem
-                                key={key}
-                                primaryText={<TextField key = {key} name = "todoDescription" multiLine={true}/>}
-                                leftCheckbox={checkedTag}
-                                rightIconButton={deleteTag(key)}
-                                style={styles.listItem}
-                            />
+                    <List.Header as="h4">Follow Up</List.Header>
+                    {Object.keys(this.props.items).map( (key) =>
+                        <List.Item key={key}>
+                            <List.Content floated='left'>
+                                <BooleanSelect key={key} name="todoItemCompleted" placeholder="Done?"/>
+                            </List.Content>
+                            <List.Content floated='right'>
+                                <Button onClick={() => this.props.removeTodoItem(key)} icon>
+                                    <Icon name='delete'/>
+                                </Button>
+                            </List.Content>
+                            <List.Content>
+                                <TextArea key={key} name="todoDescription" placeholder="Follow up task..."/>
+                            </List.Content>
+                        </List.Item>
                         )}
                 </List>
-                <FlatButton label="Add Item" primary={true} style={styles.button} onClick={() => this.props.addTodoItem()}/>
+                <Button primary basic type="button" onClick={() => this.props.addTodoItem()}>Add Item</Button>
             </div>
         )
     }

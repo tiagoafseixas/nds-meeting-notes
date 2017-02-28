@@ -16,7 +16,7 @@ module.exports = {
         { 
           test: /\.js$/, 
           // excluir os modulos node e a API de backend
-          exclude: /(node_modules|models|server.js)/, 
+          exclude: /(node_modules|models|server.js|controllers)/, 
           loader: 'babel-loader?presets[]=es2015&presets[]=react'
         },
         // CSS

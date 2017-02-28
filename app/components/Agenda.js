@@ -3,15 +3,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { List, ListItem } from 'material-ui/List';
-import Checkbox from 'material-ui/Checkbox';
-import Divider from 'material-ui/Divider';
-import TextField from 'material-ui/TextField';
-import FlatButton from 'material-ui/FlatButton';
-import IconButton from 'material-ui/IconButton';
-import ActionDelete from 'material-ui/svg-icons/action/delete';
-import ActionInfo from 'material-ui/svg-icons/action/info';
+import { List, Button, Icon, TextArea, Item } from 'semantic-ui-react'
 
+import BooleanSelect from './BooleanSelect';
 import { addAgendaItem, removeAgendaItem } from '../actions/AgendaActions';
 
 class Agenda extends React.Component
@@ -23,40 +17,27 @@ class Agenda extends React.Component
 
     render()
     {
-        const styles = {
-            button: {margin: 12},
-            listItem : {paddingBottom: 0},
-            checkbox : {top: '25px'},
-            trash : {top:"12px"}
-        };
-
-        let checkedTag = (
-            <div>
-                <Checkbox
-                    name="agendaItemCompleted" style={styles.checkbox}
-                    defaultChecked={false}/>
-            </div>
-        );
-        let deleteTag = ( (key) =>
-            <IconButton tooltip="Delete" onClick={() => this.props.removeAgendaItem(key)} style={styles.trash}>
-                <ActionDelete />
-            </IconButton>
-        );
-
         return (
-            <div>
-                <List name = "agenda">
-                    <ListItem primaryText="Agenda" rightIcon={<ActionInfo />} style={styles.listItem}/>
-                    <Divider />
+            <div id = "agendaWrapperDiv">
+                <List divided verticalAlign='middle' name = "agenda">
+                    <List.Header as="h4">Meeting Agenda</List.Header>
                     {Object.keys(this.props.agenda).map( (key) => 
-                        <ListItem key={key}
-                            primaryText={<TextField key = {key} name = "agendaDescription"  multiLine={true}/>}
-                            leftCheckbox={checkedTag}
-                            rightIconButton={deleteTag(key)}
-                            style={styles.listItem} />
+                    <List.Item key={key}>
+                        <List.Content floated='left'>
+                            <BooleanSelect key={key} name="agendaItemCompleted" placeholder="Done?"/>
+                        </List.Content>
+                        <List.Content floated='right'>
+                            <Button onClick={() => this.props.removeAgendaItem(key)} icon>
+                                <Icon name='delete'/>
+                            </Button>
+                        </List.Content>
+                        <List.Content>
+                            <TextArea key={key} name="agendaDescription" placeholder="Agenda Item" autoHeight />
+                        </List.Content>
+                    </List.Item>
                     )}
                 </List>
-                <FlatButton label="New Agenda Item" primary={true} style={styles.button} onClick={() => this.props.addAgendaItem()}/>
+                <Button primary basic type="button" onClick={() => this.props.addAgendaItem()}>Add Agenda Item</Button>
             </div>
         );
     }

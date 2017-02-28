@@ -1,8 +1,10 @@
 import React from "react";
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { Grid, Row, Col } from 'react-flexbox-grid/lib/index'
+
+import { Grid, Segment } from 'semantic-ui-react'
+
 import MeetingDetail from './MeetingDetail.js'
 import SideBar from './SideBar';
+
 import { connect } from 'react-redux';
 
 class App extends React.Component
@@ -20,19 +22,16 @@ class App extends React.Component
         }
         
         return (
-            <MuiThemeProvider>
-                <Grid>
-                    <Row>
-                        <Col xs={0} md={3}>
-                            <SideBar minutes={this.props.state.minutes.items}/>
-                        </Col>
-
-                        <Col xs={3} md={9}>
-                            {meetingDetail}
-                        </Col>
-                    </Row>
-                </Grid>
-            </MuiThemeProvider>
+            <Grid>
+                <Grid.Row>
+                    <Grid.Column width={4}>
+                        <Segment basic><SideBar minutes={this.props.state.minutes.items}/></Segment>
+                    </Grid.Column>
+                    <Grid.Column width={12}>
+                        <Segment basic>{meetingDetail}</Segment>
+                    </Grid.Column>
+                </Grid.Row>
+            </Grid>
         )
     }
 }

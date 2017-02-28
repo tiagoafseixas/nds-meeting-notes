@@ -1,19 +1,13 @@
 import React from "react";
 
-import {Card, CardActions, CardHeader, CardTitle, CardText} from 'material-ui/Card';
-import RaisedButton from 'material-ui/RaisedButton';
-import Checkbox from 'material-ui/Checkbox';
-import TextField from 'material-ui/TextField';
-import TimePicker from 'material-ui/TimePicker';
-import DatePicker from 'material-ui/DatePicker';
-import Divider from 'material-ui/Divider';
-import { Row, Col } from 'react-flexbox-grid/lib/index';
+import { Input, Grid, Segment, TextArea, Form, Button, Header, Divider } from 'semantic-ui-react'
 
 import { connect } from 'react-redux';
 
 import TodoList from '../components/TodoList';
 import Agenda from '../components/Agenda';
 import PeopleList from '../components/PeopleList';
+
 
 import { updateCurrentMinuteTitle, saveMinute } from '../actions/MinutesActions';
 
@@ -32,81 +26,81 @@ class MeetingDetail extends React.Component
         
     render()
     {
-        const styles = {
-            wrapper: { display: 'flex', flexWrap: 'wrap' },
-            title: { fontSize: '24px' },
-            titleFields: { fontSize: '14px', fontColor: "#888", margin: "0 1em 0 0px" },
-            button: {margin: 12}
-        };
-
         return (
-            <Card>
-                <form
-                    id="meetingDetailForm"
-                    onSubmit={(event) => this.props.saveMinute(event)}
-                    formMethod="post" action="/api/minutes/"
-                >
-                    <CardTitle>
-                        <TextField
-                            id="title" name="title"
-                            hintText="Meeting Title" fullWidth={true} style={styles.title} value={this.props.minute.title}
-                            onChange={ (event, callback) => {this.props.updateCurrentMinuteTitle(event, this.props.minute.id)} } />
-                        <div style={styles.wrapper}>
-                            <DatePicker
-                                id="date" name="date" hintText="Meeting Day"
-                                autoOk={true} textFieldStyle={styles.titleFields}
-                            />
-                            <TimePicker
-                                id="time" name="time" hintText="Meeting Time" autoOk={true} textFieldStyle={styles.titleFields}
-                                defaultTime={this.props.minute.time}
-                            />
-                        </div>
-                    </CardTitle>
-                    <CardText>
-                            <Row>
-                                <Col  xs={3} md={6}>
-                                    <Agenda agenda={this.props.state.agenda.items}/>
-                                </Col>
-                                <Col  xs={3} md={6}>
-                                    <PeopleList title="Invited/Attended" items={this.props.state.invited.items}/>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col md={12}>
-                                    <Divider />
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col  xs={3} md={12}>
-                                    <TextField
-                                        id="minute" name="minute"
-                                        hintText="Take you notes right here!"
-                                        floatingLabelText="Meeting Minute"
-                                        multiLine={true} rows={6} rowsMax={6}
-                                        fullWidth={true}
-                                    >{this.props.minute.minute}</TextField>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col xs={3} md={6}>
-                                    <TodoList items={this.props.state.todos.items}/>
-                                </Col>
-                                <Col xs={3} md={6}> 
-                                    <TextField
-                                        id="conclusions" name="conclusions"
-                                        hintText="After the meeting write your thoughts right here!"
-                                        floatingLabelText="Conclusions"
-                                        multiLine={true} rows={6} rowsMax={6}
-                                        fullWidth={true}
-                                    >{this.props.minute.conclusions}</TextField>
-                                </Col>
-                            </Row>
-                    </CardText>
-                    <CardActions>
-                        <RaisedButton label="Save" primary={true} type="submit"/>
-                    </CardActions>
-                </form>
-            </Card>
+            <Form id="meetingDetailForm"
+                onSubmit={(event) => this.props.saveMinute(event)}
+                formMethod="post" action="/api/minutes/">
+                <Header as='h3' attached='top'>
+                    <Form.Input
+                        id="title" name="title" placeholder="New Meeting Minute..."
+                        onChange={ (event, callback) => 
+                            {this.props.updateCurrentMinuteTitle(
+                                event, this.props.minute.id)
+                            } }
+                        />
+                    <Header.Subheader>
+                        <Input id="date" name="date" type="date"/>
+                        <Input id="time" name="time" type="time"/>
+                    </Header.Subheader>
+                </Header>
+                <Segment attached>
+                    <Grid columns={2}>
+                        <Grid.Row>
+                            <Grid.Column>
+                                <Segment>
+                                    <Agenda 
+                                        agenda={this.props.state.agenda.items}/>
+                                    </Segment>
+                            </Grid.Column>
+                            <Grid.Column>
+                                <Segment>
+                                    <PeopleList
+                                        title="Invited/Attended"
+                                        items={this.props.state.invited.items}/>
+                                </Segment>
+                            </Grid.Column>
+                        </Grid.Row>
+                        <Divider section />
+                        <Grid.Row>
+                            <Grid.Column width={16}>
+                                <Form.TextArea
+                                    id="minute" name="minute"
+                                    label="Notes"
+                                    placeholder="Take you notes right here..."
+                                    defaultValue={this.props.minute.minute}>
+                                </Form.TextArea>
+                            </Grid.Column>
+                        </Grid.Row>
+                        <Divider section />
+                        <Grid.Row>
+                            <Grid.Column>
+                                <Segment>
+                                    <TodoList
+                                        items={this.props.state.todos.items}/>
+                                    </Segment>
+                            </Grid.Column>
+                            <Grid.Column> 
+                                <Form.TextArea
+                                    id="conclusions" name="conclusions"
+                                    label="Conclusions"
+                                    placeholder="After the meeting write your thoughts right here..."
+                                    defaultValue={this.props.minute.conclusions}
+                                >
+                                </Form.TextArea>
+                            </Grid.Column>
+                        </Grid.Row>
+                        <Grid.Row>
+                            <Grid.Column width={2}>
+                                <Button.Group>
+                                    <Button>Cancel</Button>
+                                    <Button.Or />
+                                    <Button positive>Save</Button>
+                                </Button.Group>
+                            </Grid.Column>
+                        </Grid.Row>
+                    </Grid>
+                </Segment>
+            </Form>
         );
     }
 }

@@ -5,6 +5,8 @@ var bodyParser = require('body-parser');
 
 var app = express();
 
+var MinutesController = require('./app/controllers/Minutes');
+
 // CONFIGURE MIDDLEWARE
 // =============================================================================
 app.use(compression());
@@ -32,10 +34,22 @@ router.get('/', (req, res) => {
 // =============================================================================
 router.route('/minutes')
     // Create a new minutes
-    .post( (req, res) => {
+    .post( (req, res, next) => {
         console.log('#server.js -> creating a new minute!');
         console.log(req.body);
-    });
+        res.json({ id: MinutesController.post(req, res, next) });
+    })
+    
+    .get( (req, res, next) => {
+        console.log('#server.js -> getting minutes!');
+        MinutesController.get(req, res, next).then(
+            (items) => {
+                //console.log(err);
+                console.log(items);
+                res.send({items});
+            }
+        );
+    } );
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
