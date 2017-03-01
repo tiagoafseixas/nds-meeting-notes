@@ -35710,11 +35710,18 @@ var SideBar = function (_React$Component) {
         value: function render() {
             var _this2 = this;
 
+            var styles = {
+                draft: {
+                    fontStyle: "italic"
+                }
+            };
+
             console.log("render sidebar");
-            console.log(this.props.minutes);
             var activeItem = this.props.activeItem;
             var meetingList = null;
+
             if (this.props.minutes) {
+                var style = null;
                 meetingList = _react2.default.createElement(
                     _semanticUiReact.Menu.Menu,
                     null,
@@ -35938,6 +35945,13 @@ var Immutable = __webpack_require__(106);
  * CONSTANTS
  * =============================================================================
  */
+var DEFAULT_MINUTE_STATE = {
+    items: {},
+    current: null,
+    loading: false,
+    adding: false
+};
+
 var NEW_MINUTE_ITEM = function NEW_MINUTE_ITEM(id) {
     return {
         title: "",
@@ -35962,7 +35976,7 @@ var NEW_MINUTE_ID = "NEW";
  * =============================================================================
  */
 function minutes() {
-    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { items: {}, current: null, loading: false };
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_MINUTE_STATE;
     var action = arguments[1];
 
     console.log("#minutes -> " + action.type);
@@ -36016,7 +36030,7 @@ function minutes() {
         case _MinutesActions.MINUTE_ITEMS_LOADED:
             return Immutable.Map(state).set("items", _.keyBy(action.items, "_id")).toObject();
         case _MinutesActions.MINUTE_ADDING:
-            return Immutable.Map(state).set("isAdding", action.bool).toObject();
+            return Immutable.Map(state).set("adding", action.bool).toObject();
         case _MinutesActions.MINUTE_ADDED:
             return state;
         case _MinutesActions.MINUTE_ADD_ERROR:

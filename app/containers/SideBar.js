@@ -17,11 +17,18 @@ class SideBar extends React.Component
 
     render()
     {
+        const styles = {
+            draft : {
+                fontStyle: "italic"
+            }
+        };
+
         console.log("render sidebar");
-        console.log(this.props.minutes);
         var activeItem = this.props.activeItem;
         let meetingList = null;
+
         if(this.props.minutes) {
+            let style = null;
             meetingList = (
                 <Menu.Menu>
                     {Object.keys(this.props.minutes).map( (key) => 

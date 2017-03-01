@@ -4,11 +4,7 @@ require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
 // Minute Action Ids
-import { 
-    ADD_MINUTE, UPDATE_CURRENT_MINUTE_TITLE,
-    GET_MINUTE, SET_MINUTE, SAVE_MINUTE, LOAD_MINUTES
-} from '../actions/MinutesActions';
-
+import { ADD_MINUTE, UPDATE_CURRENT_MINUTE_TITLE, SET_MINUTE } from '../actions/MinutesActions';
 import { MINUTE_ITEMS_LOAD_ERROR, MINUTE_ITEMS_LOADED, MINUTE_ITEMS_IS_LOADING } from '../actions/MinutesActions';
 import { MINUTE_ADD_ERROR, MINUTE_ADDED, MINUTE_ADDING } from '../actions/MinutesActions';
 
@@ -19,6 +15,14 @@ var Immutable = require('immutable');
  * CONSTANTS
  * =============================================================================
  */
+const DEFAULT_MINUTE_STATE =
+{
+    items   : {},
+    current : null,
+    loading : false,
+    adding  : false
+};
+
 const NEW_MINUTE_ITEM = (id) => { return {
     title : "",
     date : new Date(),
@@ -40,7 +44,7 @@ const NEW_MINUTE_ID = "NEW";
  * REDUCERS
  * =============================================================================
  */
-export function minutes(state = { items : {}, current: null, loading : false}, action)
+export function minutes(state = DEFAULT_MINUTE_STATE, action)
 {
     console.log("#minutes -> " + action.type);
     switch (action.type)
@@ -94,7 +98,7 @@ export function minutes(state = { items : {}, current: null, loading : false}, a
         case MINUTE_ITEMS_LOADED:
             return Immutable.Map(state).set("items", _.keyBy(action.items, "_id")).toObject();
         case MINUTE_ADDING:
-            return Immutable.Map(state).set("isAdding", action.bool).toObject();
+            return Immutable.Map(state).set("adding", action.bool).toObject();
         case MINUTE_ADDED:
             return state;
         case MINUTE_ADD_ERROR:
