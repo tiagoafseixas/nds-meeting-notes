@@ -37,7 +37,7 @@ class MeetingDetail extends React.Component
                 <Header as='h3' attached='top'>
                     <Form.Input
                         id="title" name="title" placeholder="New Meeting Minute..."
-                        value={this.props.state.minutes.items[this.props.state.minutes.current].title}
+                        value={this.props.minute.title}
                         onChange={ (event, callback) => 
                             {this.props.updateCurrentMinuteTitle(
                                 event, this.props.minute.id)

@@ -35521,7 +35521,7 @@ var MeetingDetail = function (_React$Component) {
                     { as: 'h3', attached: 'top' },
                     _react2.default.createElement(_semanticUiReact.Form.Input, {
                         id: 'title', name: 'title', placeholder: 'New Meeting Minute...',
-                        value: this.props.state.minutes.items[this.props.state.minutes.current].title,
+                        value: this.props.minute.title,
                         onChange: function onChange(event, callback) {
                             _this2.props.updateCurrentMinuteTitle(event, _this2.props.minute.id);
                         }
@@ -35549,7 +35549,7 @@ var MeetingDetail = function (_React$Component) {
                                     _semanticUiReact.Segment,
                                     null,
                                     _react2.default.createElement(_Agenda2.default, {
-                                        agenda: this.props.agendaItems })
+                                        agenda: this.props.minute.agenda })
                                 )
                             ),
                             _react2.default.createElement(

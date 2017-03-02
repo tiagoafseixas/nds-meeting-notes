@@ -48,6 +48,7 @@ const mapDispatchToProps = (dispatch, ownProps) =>
     return {
         addMinute: (event, callback) => {
             dispatch(addMinute());
+            // reset agenda, invited e todos
         }
     }
 };
