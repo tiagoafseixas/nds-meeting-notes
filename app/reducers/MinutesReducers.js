@@ -77,10 +77,7 @@ export function minutes(state = DEFAULT_MINUTE_STATE, action)
              */
             var items = Immutable.Map(state.items).toObject();
             items[action.id].title = action.title;
-            return Immutable.Map({
-                items,
-                current : state.current
-            }).toObject();
+            return Immutable.Map({items, current : state.current }).toObject();
         case SET_MINUTE:
             /**
              * =================================================================
