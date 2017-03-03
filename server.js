@@ -70,7 +70,8 @@ router.route('/minutes')
 
     .get( (req, res, next) => {
         console.log('#server.js -> getting minutes!');
-        MinutesController.get().then( (items) => { res.send({items}); });
+        let query = Immutable.Map(req.query).set("title", new RegExp(req.query.title, "i"));
+        MinutesController.get(query).then( (items) => { res.send({items}); });
     } )
 
     .delete( (req, res, next) => {
@@ -87,6 +88,28 @@ router.route('/minutes')
             );
         }
     } )
+
+    .put( (req, res, next) => {
+        console.log('#server.js -> updating a minute!');
+        req.checkBody('id', 'A valid id to delete is required.').notEmpty();
+        req.checkBody('title', 'Title is required.').notEmpty();
+        req.checkBody('date', 'Not a valid date format.').notEmpty()
+            .withMessage('Date is Required.').isDate();
+        req.checkBody('time', 'Invalid time format. Hour must be HH:MM.').notEmpty()
+            .withMessage('Time is required')
+            .matches(/^[\d]{2}:[\d]{2}$/);
+
+        let errors = req.validationErrors();
+
+        if (errors) {
+            res.status(500).json({errors});
+        } else {
+            MinutesController.update(
+                Immutable.Map(req.body),
+                (err, result) => { (err) ? res.status(500).json({err}) : res.json(result) }
+            );
+        }
+    })
     ;
 
 // REGISTER OUR ROUTES -------------------------------

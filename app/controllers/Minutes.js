@@ -9,15 +9,8 @@ mongoose.connect('localhost:27017');
 
 var Minute = require('../models/Minutes');
 
-/**
- * exports.post - inserts a new meeting minute in the database.
- * 
- * @todo: rever a questão dos compacts e concats. podia e devia estar em algum
- *        tipo de middleware.
- */
-exports.post = (map = Immutable.Map({}), callback) => {
-    console.log(">controller.minutes -> post");
-
+function convertMapToMinuteModel(map = Immutable.Map())
+{
     let minute = new Minute();
     minute.title = map.get("title");
     minute.date = new Date(map.get("date"));
@@ -45,15 +38,30 @@ exports.post = (map = Immutable.Map({}), callback) => {
         (v, i) => { return { description : v, complete : todoCompleted[i] } }
     );
 
-    minute.save((err) => { (err) ? callback({err}) : callback(null, {id: minute._id}) });
+    return minute;
+}
 
-    console.log("<controller.minutes -> post");
+/**
+ * exports.post - inserts a new meeting minute in the database.
+ * 
+ * @todo: rever a questão dos compacts e concats. podia e devia estar em algum
+ *        tipo de middleware.
+ */
+exports.post = (map, callback) => {
+    console.log(">controller.minutes -> post");
+    let minute = convertMapToMinuteModel(map);
+    minute.save((err) => { (err) ? callback({err}) : callback(null, {id: minute._id}) });
 };
 
-exports.get = () => {
+exports.get = (filter = {}) => {
     console.log(">controller.minutes -> get");
+    console.log(filter);
+    /**
+     * @todo: filter is not working! it should be targeted to functionality and 
+     *        not generic.
+     */
     return Minute
-        .find()
+        .find(filter)
         .limit(20)
         .sort({_id : -1})
         .exec( (err, minutes) => {
@@ -61,14 +69,20 @@ exports.get = () => {
             console.log(minutes);
             return minutes;
         } );
-    console.log("<controller.minutes -> get");
 };
 
 exports.delete = (id, callback) => {
+    console.log(">controller.minutes -> delete");
     return Minute.findByIdAndRemove(
         id,
         (err, minute) => { 
             (err) ? callback(err) : callback(err, (minute) ? minute._id : '')
         }
     );
+};
+
+exports.update = (map = Immutable.Map({}), callback) => {
+    console.log(">controller.minutes -> update");
+    let minute = convertMapToMinuteModel(map);
+    minute.save((err) => { (err) ? callback({err}) : callback(null, {id: minute._id}) });
 };
